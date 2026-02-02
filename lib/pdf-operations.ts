@@ -316,22 +316,13 @@ export async function htmlToPDF(
     // Scale 2 means 2x resolution, so canvas will be 2x the size
     const html2canvasScale = 2;
     const canvas = await html2canvas(bodyElement, {
-      scale: html2canvasScale, // Higher quality (2x resolution)
       useCORS: true,
       logging: false,
-      backgroundColor: "#ffffff",
+      background: "#ffffff",
       allowTaint: false,
-      windowWidth: pageWidthPx,
-      windowHeight: bodyElement.scrollHeight || pageHeightPx,
+      width: pageWidthPx,
+      height: bodyElement.scrollHeight || pageHeightPx,
       letterRendering: true, // Better text rendering
-      onclone: (clonedDoc) => {
-        // Ensure fonts are loaded in cloned document
-        const clonedBody = clonedDoc.body;
-        if (clonedBody) {
-          clonedBody.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
-          clonedBody.style.lineHeight = '1.5';
-        }
-      },
     });
 
     // Get dimensions in mm (for A4) or inches (for Letter)
